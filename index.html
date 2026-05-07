@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>media-hub-assets</title>
+
+		<style>
+			:root {
+				--bg: #101010;
+				--panel: #181818;
+				--card: #202020;
+				--card-hover: #2a2a2a;
+				--text: #f5f5f5;
+				--muted: #9ca3af;
+				--blue: #3b82f6;
+				--green: #36a269;
+				--red: #ff5f63;
+				--border: rgba(255, 255, 255, 0.08);
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: Arial, Helvetica, sans-serif;
+			}
+
+			header {
+				padding: 32px;
+				border-bottom: 1px solid var(--border);
+				background: #151515;
+			}
+
+			header h1 {
+				margin: 0 0 8px;
+				font-size: 34px;
+				text-transform: lowercase;
+			}
+
+			header p {
+				margin: 0;
+				color: var(--muted);
+				font-size: 15px;
+			}
+
+			main {
+				padding: 32px;
+			}
+
+			.section {
+				margin-bottom: 52px;
+			}
+
+			.section-title {
+				margin: 0 0 20px;
+				font-size: 26px;
+				color: var(--blue);
+			}
+
+			.section-title.red {
+				color: var(--red);
+			}
+
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+				gap: 22px;
+			}
+
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 18px;
+				overflow: hidden;
+				cursor: pointer;
+				transition:
+					transform 0.15s ease,
+					background 0.15s ease,
+					border-color 0.15s ease;
+				box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
+			}
+
+			.card:hover {
+				background: var(--card-hover);
+				transform: translateY(-3px);
+				border-color: rgba(59, 130, 246, 0.4);
+			}
+
+			.preview {
+				width: 100%;
+				aspect-ratio: 16 / 9;
+				background: #050505;
+				overflow: hidden;
+			}
+
+			.preview img {
+				width: 100%;
+				height: 100%;
+				display: block;
+				object-fit: cover;
+			}
+
+			.content {
+				padding: 14px;
+			}
+
+			.name {
+				color: var(--green);
+				font-size: 17px;
+				font-weight: 700;
+				margin-bottom: 8px;
+				text-transform: lowercase;
+			}
+
+			.type {
+				display: inline-block;
+				margin-bottom: 10px;
+				padding: 4px 8px;
+				border-radius: 999px;
+				background: #111827;
+				color: #d1d5db;
+				font-size: 12px;
+				font-weight: 700;
+				text-transform: lowercase;
+			}
+
+			.path {
+				color: var(--muted);
+				font-size: 12px;
+				word-break: break-all;
+				line-height: 1.4;
+			}
+
+			.copied {
+				position: fixed;
+				left: 50%;
+				bottom: 28px;
+				transform: translateX(-50%);
+				background: #22c55e;
+				color: #052e16;
+				padding: 12px 18px;
+				border-radius: 999px;
+				font-weight: 800;
+				box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+				opacity: 0;
+				pointer-events: none;
+				transition:
+					opacity 0.2s ease,
+					transform 0.2s ease;
+				z-index: 999;
+			}
+
+			.copied.show {
+				opacity: 1;
+				transform: translateX(-50%) translateY(-4px);
+			}
+
+			@media (max-width: 700px) {
+				header,
+				main {
+					padding: 22px;
+				}
+
+				header h1 {
+					font-size: 28px;
+				}
+
+				.grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<h1>media-hub-assets</h1>
+			<p>galerie visuelle pour copier rapidement les urls des images nuvio / stremio.</p>
+		</header>
+
+		<main>
+			<section class="section">
+				<h2 class="section-title">📌 sélections</h2>
+
+				<div class="grid">
+					<div class="card" onclick="copyAsset('assets/selections/horreur--cover.png')">
+						<div class="preview">
+							<img src="assets/selections/horreur--cover.png" alt="horreur cover" />
+						</div>
+						<div class="content">
+							<div class="name">🎃 horreur</div>
+							<div class="type">cover</div>
+							<div class="path">assets/selections/horreur--cover.png</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/selections/horreur--hero.webp')">
+						<div class="preview">
+							<img src="assets/selections/horreur--hero.webp" alt="horreur hero" />
+						</div>
+						<div class="content">
+							<div class="name">🎃 horreur</div>
+							<div class="type">hero</div>
+							<div class="path">assets/selections/horreur--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/selections/imdb-charts--cover.jpg')">
+						<div class="preview">
+							<img src="assets/selections/imdb-charts--cover.jpg" alt="imdb charts cover" />
+						</div>
+						<div class="content">
+							<div class="name">⭐ imdb charts</div>
+							<div class="type">cover</div>
+							<div class="path">assets/selections/imdb-charts--cover.jpg</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/selections/imdb-charts--hero.webp')">
+						<div class="preview">
+							<img src="assets/selections/imdb-charts--hero.webp" alt="imdb charts hero" />
+						</div>
+						<div class="content">
+							<div class="name">⭐ imdb charts</div>
+							<div class="type">hero</div>
+							<div class="path">assets/selections/imdb-charts--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/selections/netflix-kids--cover.png')">
+						<div class="preview">
+							<img src="assets/selections/netflix-kids--cover.png" alt="netflix kids cover" />
+						</div>
+						<div class="content">
+							<div class="name">🧒 netflix kids</div>
+							<div class="type">cover</div>
+							<div class="path">assets/selections/netflix-kids--cover.png</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="section">
+				<h2 class="section-title">🌸 myanimelist ⛩️</h2>
+
+				<div class="grid">
+					<div class="card" onclick="copyAsset('assets/myanimelist/fankai--cover.jpg')">
+						<div class="preview">
+							<img src="assets/myanimelist/fankai--cover.jpg" alt="fankai cover" />
+						</div>
+						<div class="content">
+							<div class="name">改 fankai</div>
+							<div class="type">cover</div>
+							<div class="path">assets/myanimelist/fankai--cover.jpg</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/myanimelist/myanimelist-charts--cover.png')">
+						<div class="preview">
+							<img src="assets/myanimelist/myanimelist-charts--cover.png" alt="myanimelist charts cover" />
+						</div>
+						<div class="content">
+							<div class="name">🏆 myanimelist charts</div>
+							<div class="type">cover</div>
+							<div class="path">assets/myanimelist/myanimelist-charts--cover.png</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/myanimelist/myanimelist-charts--hero.webp')">
+						<div class="preview">
+							<img src="assets/myanimelist/myanimelist-charts--hero.webp" alt="myanimelist charts hero" />
+						</div>
+						<div class="content">
+							<div class="name">🏆 myanimelist charts</div>
+							<div class="type">hero</div>
+							<div class="path">assets/myanimelist/myanimelist-charts--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/myanimelist/myanimelist-selections--cover.png')">
+						<div class="preview">
+							<img src="assets/myanimelist/myanimelist-selections--cover.png" alt="myanimelist selections cover" />
+						</div>
+						<div class="content">
+							<div class="name">📌 myanimelist sélections</div>
+							<div class="type">cover</div>
+							<div class="path">assets/myanimelist/myanimelist-selections--cover.png</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="section">
+				<h2 class="section-title">🎞️ animation</h2>
+
+				<div class="grid">
+					<div class="card" onclick="copyAsset('assets/animation/disney--cover.gif')">
+						<div class="preview">
+							<img src="assets/animation/disney--cover.gif" alt="disney cover" />
+						</div>
+						<div class="content">
+							<div class="name">🏰 disney</div>
+							<div class="type">cover gif</div>
+							<div class="path">assets/animation/disney--cover.gif</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/disney--hero.webp')">
+						<div class="preview">
+							<img src="assets/animation/disney--hero.webp" alt="disney hero" />
+						</div>
+						<div class="content">
+							<div class="name">🏰 disney</div>
+							<div class="type">hero</div>
+							<div class="path">assets/animation/disney--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/dreamworks--cover.gif')">
+						<div class="preview">
+							<img src="assets/animation/dreamworks--cover.gif" alt="dreamworks cover" />
+						</div>
+						<div class="content">
+							<div class="name">🌙 dreamworks</div>
+							<div class="type">cover gif</div>
+							<div class="path">assets/animation/dreamworks--cover.gif</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/dreamworks--hero.webp')">
+						<div class="preview">
+							<img src="assets/animation/dreamworks--hero.webp" alt="dreamworks hero" />
+						</div>
+						<div class="content">
+							<div class="name">🌙 dreamworks</div>
+							<div class="type">hero</div>
+							<div class="path">assets/animation/dreamworks--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/ghibli--cover.webp')">
+						<div class="preview">
+							<img src="assets/animation/ghibli--cover.webp" alt="ghibli cover" />
+						</div>
+						<div class="content">
+							<div class="name">🗻 ghibli</div>
+							<div class="type">cover</div>
+							<div class="path">assets/animation/ghibli--cover.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/ghibli--hero.webp')">
+						<div class="preview">
+							<img src="assets/animation/ghibli--hero.webp" alt="ghibli hero" />
+						</div>
+						<div class="content">
+							<div class="name">🗻 ghibli</div>
+							<div class="type">hero</div>
+							<div class="path">assets/animation/ghibli--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/illumination--cover.jpeg')">
+						<div class="preview">
+							<img src="assets/animation/illumination--cover.jpeg" alt="illumination cover" />
+						</div>
+						<div class="content">
+							<div class="name">💡 illumination</div>
+							<div class="type">cover</div>
+							<div class="path">assets/animation/illumination--cover.jpeg</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/pixar--cover.gif')">
+						<div class="preview">
+							<img src="assets/animation/pixar--cover.gif" alt="pixar cover" />
+						</div>
+						<div class="content">
+							<div class="name">💡 pixar</div>
+							<div class="type">cover gif</div>
+							<div class="path">assets/animation/pixar--cover.gif</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/pixar--hero.webp')">
+						<div class="preview">
+							<img src="assets/animation/pixar--hero.webp" alt="pixar hero" />
+						</div>
+						<div class="content">
+							<div class="name">💡 pixar</div>
+							<div class="type">hero</div>
+							<div class="path">assets/animation/pixar--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/sony-pictures-animation--cover.gif')">
+						<div class="preview">
+							<img src="assets/animation/sony-pictures-animation--cover.gif" alt="sony pictures animation cover" />
+						</div>
+						<div class="content">
+							<div class="name">🕷️ sony pictures animation</div>
+							<div class="type">cover gif</div>
+							<div class="path">assets/animation/sony-pictures-animation--cover.gif</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/animation/sony-pictures-animation--hero.webp')">
+						<div class="preview">
+							<img src="assets/animation/sony-pictures-animation--hero.webp" alt="sony pictures animation hero" />
+						</div>
+						<div class="content">
+							<div class="name">🕷️ sony pictures animation</div>
+							<div class="type">hero</div>
+							<div class="path">assets/animation/sony-pictures-animation--hero.webp</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="section">
+				<h2 class="section-title red">🌌 univers 🗂️</h2>
+
+				<div class="grid">
+					<div class="card" onclick="copyAsset('assets/univers/dc--cover.gif')">
+						<div class="preview">
+							<img src="assets/univers/dc--cover.gif" alt="dc cover" />
+						</div>
+						<div class="content">
+							<div class="name">🦸 dc</div>
+							<div class="type">cover gif</div>
+							<div class="path">assets/univers/dc--cover.gif</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/univers/dc--hero.webp')">
+						<div class="preview">
+							<img src="assets/univers/dc--hero.webp" alt="dc hero" />
+						</div>
+						<div class="content">
+							<div class="name">🦸 dc</div>
+							<div class="type">hero</div>
+							<div class="path">assets/univers/dc--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/univers/marvel--cover.gif')">
+						<div class="preview">
+							<img src="assets/univers/marvel--cover.gif" alt="marvel cover" />
+						</div>
+						<div class="content">
+							<div class="name">🕷️ marvel</div>
+							<div class="type">cover gif</div>
+							<div class="path">assets/univers/marvel--cover.gif</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/univers/marvel--hero.webp')">
+						<div class="preview">
+							<img src="assets/univers/marvel--hero.webp" alt="marvel hero" />
+						</div>
+						<div class="content">
+							<div class="name">🕷️ marvel</div>
+							<div class="type">hero</div>
+							<div class="path">assets/univers/marvel--hero.webp</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/univers/tolkien--cover.gif')">
+						<div class="preview">
+							<img src="assets/univers/tolkien--cover.gif" alt="tolkien cover" />
+						</div>
+						<div class="content">
+							<div class="name">💍 tolkien</div>
+							<div class="type">cover gif</div>
+							<div class="path">assets/univers/tolkien--cover.gif</div>
+						</div>
+					</div>
+
+					<div class="card" onclick="copyAsset('assets/univers/tolkien--hero.webp')">
+						<div class="preview">
+							<img src="assets/univers/tolkien--hero.webp" alt="tolkien hero" />
+						</div>
+						<div class="content">
+							<div class="name">💍 tolkien</div>
+							<div class="type">hero</div>
+							<div class="path">assets/univers/tolkien--hero.webp</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<div class="copied" id="copied">url copiée ✓</div>
+
+		<script>
+			function getBaseUrl() {
+				return window.location.origin + window.location.pathname.replace(/\/$/, "");
+			}
+
+			function copyAsset(path) {
+				const url = getBaseUrl() + "/" + path;
+				navigator.clipboard.writeText(url);
+
+				const copied = document.getElementById("copied");
+				copied.textContent = "url copiée ✓ " + url;
+				copied.classList.add("show");
+
+				setTimeout(() => {
+					copied.classList.remove("show");
+				}, 1800);
+			}
+		</script>
+	</body>
+</html>
